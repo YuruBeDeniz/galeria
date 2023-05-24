@@ -1,24 +1,34 @@
+import { useState } from "react";
 import { Project } from "./Project";
+import ProjectCard from "./ProjectCard";
+import ProjectForm from "./ProjectForm";
 
 interface ProjectListProps {
     projects: Project[];
+    onSave: (project: Project) => void;
 }
 
-export default function ProjectList({ projects }: ProjectListProps) {
+export default function ProjectList({ projects, onSave }: ProjectListProps) {
+  const [projectBeingEdited, setProjectBeingEdited] = useState({});
+  
+  const handleEdit = (project: Project) => {
+    //console.log(project);
+    setProjectBeingEdited(project);
+  };
+
+  const cancelEditing = () => {
+    setProjectBeingEdited({});
+  };
+
+
   return (
     <div className="row">
      {projects.map((project) => (
        <div key={project.id} className="cols-sm">
-         <div className="card">
-           <img src={project.imageUrl} alt={project.name} />
-           <section className="section dark">
-             <h5 className="strong">
-               <strong>{project.name}</strong>
-             </h5>
-             <p>{project.description}</p>
-             <p>Budget : {project.budget.toLocaleString()}</p>
-           </section>
-         </div>
+        {project === projectBeingEdited ? 
+         <ProjectForm onCancel={cancelEditing} onSave={onSave}/> :
+         <ProjectCard onEdit={handleEdit} project={project} />
+        } 
        </div>
      ))}
    </div>
