@@ -3,7 +3,7 @@ import { Project } from "./Project";
 import ProjectCard from "./ProjectCard";
 import ProjectForm from "./ProjectForm";
 
-interface ProjectListProps {
+type ProjectListProps = {
     projects: Project[];
     onSave: (project: Project) => void;
 }
@@ -26,7 +26,7 @@ export default function ProjectList({ projects, onSave }: ProjectListProps) {
      {projects.map((project) => (
        <div key={project.id} className="cols-sm">
         {project === projectBeingEdited ? 
-         <ProjectForm onCancel={cancelEditing} onSave={onSave}/> :
+         <ProjectForm project={project} onCancel={cancelEditing} onSave={onSave}/> :
          <ProjectCard onEdit={handleEdit} project={project} />
         } 
        </div>

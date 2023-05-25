@@ -1,6 +1,6 @@
 import { Project } from "./Project";
 
-interface ProjectCardProps {
+type ProjectCardProps = {
     project: Project;
     onEdit: (project: Project) => void;
 };
